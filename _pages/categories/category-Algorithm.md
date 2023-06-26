@@ -1,10 +1,10 @@
 ---
-title: "Algorithm"
+title: "recursion"
 layout: archive
-permalink: categories/algorithm
+permalink: categories/recursion
 author_profile: true
 sidebar_main: true
 ---
 
-{% assign posts = site.categories.Algorithm %}
+{% assign posts = site.categories.recursion %}
 {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}
