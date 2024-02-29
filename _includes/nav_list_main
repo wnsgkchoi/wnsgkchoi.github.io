@@ -12,12 +12,12 @@
       </li>
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
-        <span class="nav__sub-title">Algorithm</span>
+        <span class="nav__sub-title">취미</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "recursion" %}
-                        <li><a href="/categories/recursion" class="">Recursion ({{category[1].size}})</a></li>
+                    {% if category[0] == "play" %}
+                        <li><a href="/categories/play" class="">야구 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
