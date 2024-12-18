@@ -1,0 +1,26 @@
+---
+layout: default
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }}</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+    <!-- 상단 바 -->
+    {% include header.html %}
+
+    <div class="container">
+        <!-- 사이드바 -->
+        {% include sidebar.html %}
+        
+        <!-- 메인 콘텐츠 -->
+        <main class="content">
+            {{ content }}
+        </main>
+    </div>
+</body>
+</html>
