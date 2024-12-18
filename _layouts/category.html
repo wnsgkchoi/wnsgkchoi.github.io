@@ -1,0 +1,16 @@
+---
+layout: default
+---
+
+<h2>Category: {{ page.category | capitalize }}</h2>
+
+<ul class="posts">
+  {% for post in site.posts %}
+    {% if post.categories contains page.category %}
+      <li>
+        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        <p>{{ post.date | date: "%B %d, %Y" }}</p>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>

@@ -53,3 +53,9 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+title: "Stadium"
+description: "My World"
+author:
+  name: "Junha Choi"
+  bio: "Computer Science Student | LLM Enthusiast | Researcher"

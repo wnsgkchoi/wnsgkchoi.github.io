@@ -1,0 +1,181 @@
+/* ============================= */
+/*           RESET               */
+/* ============================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #1E1E1E;
+  color: #CCCCCC;
+  display: flex;
+  flex-direction: column; /* 헤더가 최상단에 위치하도록 설정 */
+  min-height: 100vh;
+}
+
+/* ============================= */
+/*           HEADER              */
+/* ============================= */
+.header {
+  background-color: #333333;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: fixed; /* 페이지 최상단에 고정 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px; /* 헤더 높이 설정 */
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.header-title h1 {
+  font-size: 1.5rem;
+}
+
+.header-nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.header-nav a {
+  color: #CCCCCC;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header-nav a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+/* ============================= */
+/*           LAYOUT              */
+/* ============================= */
+.layout {
+  display: flex;
+  margin-top: 60px; /* 헤더 높이만큼 아래로 밀기 */
+  flex: 1;
+}
+
+/* ============================= */
+/*           SIDEBAR             */
+/* ============================= */
+.sidebar {
+  width: 250px;
+  height: calc(100vh - 60px); /* 화면 높이에서 헤더 높이를 제외 */
+  background-color: #252526;
+  padding: 20px;
+  position: fixed;
+  top: 60px; /* 헤더 아래에 위치 */
+  left: 0;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar .profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar .profile img {
+  width: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+}
+
+.sidebar nav ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar nav ul li a {
+  color: #CCCCCC;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+}
+
+.sidebar nav ul li a:hover {
+  background-color: #007ACC;
+  color: #FFFFFF;
+  border-radius: 5px;
+}
+
+/* 사이드바 하위 메뉴 스타일 */
+.sidebar nav ul ul {
+  display: none; /* 기본적으로 숨김 */
+  list-style: none;
+  padding-left: 15px;
+}
+
+.sidebar nav ul li:hover > ul {
+  display: block; /* 부모 항목 hover 시 하위 메뉴 표시 */
+}
+
+.sidebar nav ul ul li a {
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  color: #CCCCCC;
+}
+
+.sidebar nav ul ul li a:hover {
+  background-color: #007ACC;
+  color: #FFFFFF;
+}
+
+
+/* ============================= */
+/*          MAIN CONTENT         */
+/* ============================= */
+.main-content {
+  margin-left: 250px; /* 사이드바 너비만큼 밀기 */
+  padding: 20px;
+  flex: 1;
+  background-color: #1E1E1E;
+  color: #CCCCCC;
+}
+
+/* ============================= */
+/*         TOGGLE BUTTON         */
+/* ============================= */
+.sidebar-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #007ACC;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 1000;
+}
+
+/* ============================= */
+/*         MEDIA QUERIES         */
+/* ============================= */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+}

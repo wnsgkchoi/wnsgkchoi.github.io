@@ -1,0 +1,21 @@
+<div class="sidebar">
+  <div class="profile">
+    <img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="Profile Picture" style="width: 80px; border-radius: 50%; margin-bottom: 10px;">
+    <h2>{{ site.author.name }}</h2>
+    <p>{{ site.author.bio }}</p>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="{{ '/' | relative_url }}">Home</a></li>
+      <li><a href="{{ '/research' | relative_url }}">Research</a></li>
+      <li><a href="{{ '/projects' | relative_url }}">Projects</a></li>
+      <li>
+        <a href="#">Study</a>
+        <ul class="submenu">
+          <li><a href="{{ '/study/mml' | relative_url }}">MML</a></li>
+          <li><a href="{{ '/study/automata' | relative_url }}">Automata</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>
