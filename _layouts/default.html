@@ -13,6 +13,7 @@ layout: default
     <!-- 상단 바 -->
     {% include header.html %}
 
+    <!-- 상단 바 아래 화면 -->
     <div class="container">
         <!-- 사이드바 -->
         {% include sidebar.html %}
@@ -22,5 +23,10 @@ layout: default
             {{ content }}
         </main>
     </div>
+
+    <!-- 좌측 하단 토글 버튼 -->
+    <button id="toggleSidebar" class="toggle-btn">☰</button>
+
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>
