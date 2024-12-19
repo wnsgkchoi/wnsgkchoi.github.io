@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,22 @@ layout: default
         
         <!-- 메인 콘텐츠 -->
         <main class="content">
-            {{ content }}
+            <div class="home-intro">
+                <h1>Welcome to Stadium</h1>
+                <p>Hello, World!</p>
+            </div>
+            <div class="recent-posts">
+                <h2>Recent Posts</h2>
+                <div class="post-list">
+                    {% for post in site.posts limit:3 %}
+                    <div class="post-box">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.date | date: "%b %d, %Y" }}</p>
+                        <a href="{{ post.url }}">Read more...</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </main>
     </div>
 
