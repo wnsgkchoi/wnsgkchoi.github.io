@@ -89,6 +89,8 @@ body, html {
     margin-bottom: 5px;
 }
 
+
+
 /* 서브카테고리 기본 숨김 */
 .subcategory {
     margin-left: 15px; /* 들여쓰기 */
@@ -99,6 +101,26 @@ body, html {
 /* 서브카테고리가 펼쳐졌을 때 */
 .subcategory.visible {
     display: block;
+}
+
+/* 서브카테고리 링크 스타일 */
+.subcategory a {
+    color: #ffffff; /* 흰색 글자 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-size: 1em; /* 글자 크기 조정 */
+    margin-left: 10px;
+    display: inline-block; /* 링크 크기 지정 */
+}
+
+/* 서브카테고리 링크 hover 효과 */
+.subcategory a:hover {
+    text-decoration: underline; /* 마우스 올릴 때 밑줄 */
+    color: #cccccc; /* hover 시 약간 밝은 회색 */
+}
+
+/* 카테고리 및 서브카테고리 간격 */
+.subcategory {
+    margin-top: 10px;
 }
 
 
@@ -277,4 +299,29 @@ body, html {
     font-size: 1.1em;
     line-height: 1.8;
     color: #d4d4d4;
+}
+
+.category-posts {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-posts li {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.category-posts a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.category-posts a:hover {
+    text-decoration: underline;
+}
+
+.category-posts span {
+    font-size: 0.9em;
+    color: #aaaaaa;
+    margin-left: 10px;
 }

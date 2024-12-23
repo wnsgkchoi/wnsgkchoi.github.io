@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+    {% include header.html %}
+
+    <main class="container">
+        <!-- 사이드바 -->
+        {% include sidebar.html %}
+
+        <ul class="content">
+            <h1>Posts</h1>
+            <div class="divider"></div>
+            {% for post in site.posts %}
+                {% if post.categories contains page.category %}
+                <div class="post-box">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.date | date: "%b %d, %Y" }}</p>
+                    <a href="{{ post.url }}">Read more...</a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </main>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
