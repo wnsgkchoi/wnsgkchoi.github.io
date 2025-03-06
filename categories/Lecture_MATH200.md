@@ -1,6 +1,6 @@
 ---
 layout: category
-category: Deep_Learning
-title: "Deep_Learning"
+category: Differential_Equation
+title: "Differential_Equation"
 permalink: /categories/2-3/
 ---
