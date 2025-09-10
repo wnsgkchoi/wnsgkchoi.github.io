@@ -1,5 +1,8 @@
-// 사이드바 토글 기능
+// File: assets/js/main.js
+// Description: Updated script for sidebar category toggle.
+
 document.addEventListener("DOMContentLoaded", () => {
+    // Legacy sidebar toggle button (currently hidden by CSS)
     const toggleButton = document.getElementById("toggleSidebar");
     const sidebar = document.querySelector(".sidebar");
     const content = document.querySelector(".content");
@@ -11,13 +14,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 카테고리 클릭 시 서브카테고리 토글
+    // New category toggle functionality
     const categoryTitles = document.querySelectorAll(".category-title");
     categoryTitles.forEach((title) => {
         title.addEventListener("click", () => {
+            // Toggle arrow icon
+            title.classList.toggle("open");
+
+            // Toggle subcategory visibility
             const subcategory = title.nextElementSibling;
             if (subcategory && subcategory.classList.contains("subcategory")) {
-                subcategory.classList.toggle("hidden");
                 subcategory.classList.toggle("visible");
             }
         });
