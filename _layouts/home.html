@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: default
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -10,15 +10,11 @@ layout: home
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
-    <!-- 상단 바 -->
     {% include header.html %}
 
-    <!-- 상단 바 아래 화면 -->
     <div class="container">
-        <!-- 사이드바 -->
         {% include sidebar.html %}
-        
-        <!-- 메인 콘텐츠 -->
+
         <main class="content">
             <div class="home-intro">
                 <h1>Welcome to Stadium</h1>
@@ -39,8 +35,9 @@ layout: home
         </main>
     </div>
 
-    <!-- 좌측 하단 토글 버튼 -->
     <button id="toggleSidebar" class="toggle-btn">☰</button>
+
+    {% include footer.html %}
 
     <script src="/assets/js/main.js"></script>
 </body>

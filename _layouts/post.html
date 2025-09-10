@@ -24,30 +24,23 @@
     </script>    
 </head>
 <body>
-    <!-- 상단 바 -->
     {% include header.html %}
 
-    <!-- 상단 바 아래 화면 -->
     <div class="container">
-        <!-- 사이드바 -->
         {% include sidebar.html %}
 
-        <!-- 포스트 -->
         <main class="content">
             <header class="post-header">
                 <h1 class="post-title">{{ page.title }}</h1>
                 <div class="post-meta">
-                    <span>Category: {{ page.categories }}<br><br></span>
+                    <span>Category: {{ page.categories | join: ", " }}<br><br></span>
                     <span>Published on {{ page.date | date: "%b %d, %Y" }}</span>
                     {% if page.last_modified_at %}
                     <span>Last updated on {{ page.last_modified_at | date: "%b %d, %Y" }}<br></span>
                     {% endif %}
-                    {% if page.categories %}
-                    {% endif %}
                 </div>
             </header>
 
-            <!-- 구분선 -->
             <div class="divider"></div>
 
             <div class="post-content">
@@ -57,8 +50,10 @@
         </main>
     </div>
 
-    <!-- 좌측 하단 토글 버튼 -->
     <button id="toggleSidebar" class="toggle-btn">☰</button>
+
+    {% include footer.html %}
+
     <script src="/assets/js/main.js"></script>
 </body>
 </html>
