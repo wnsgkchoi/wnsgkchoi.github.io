@@ -1,12 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Noto+Sans:wght@400;700&display=swap');
+
 /* 전체 레이아웃: 다크 모드 스타일 */
 body, html {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Noto Sans', Arial, sans-serif;
     box-sizing: border-box;
     height: 100%;
     background-color: #1e1e1e; /* 어두운 배경 */
     color: #d4d4d4; /* 연한 회색 글자 */
+}
+
+/* 제목 폰트 추가 */
+h1, h2, h3 {
+    font-family: 'Fira Code', monospace;
 }
 
 /* 상단 바 */
@@ -210,7 +217,7 @@ body, html {
 }
 
 .post-box a {
-    color: #1e90ff;
+    color: #1e90ff; /* 이 부분은 아래에서 덮어씌워집니다. */
     text-decoration: none;
     font-size: 1em;
 }
@@ -267,8 +274,7 @@ body, html {
 
 
 /*****************************************************
-******       아래부터는 포스트 관련            ********** 
-*****************************************************/
+****** 아래부터는 포스트 관련            ********** *****************************************************/
 
 /* 포스트 헤더 스타일 */
 .post-header {
@@ -312,7 +318,7 @@ body, html {
 }
 
 .category-posts a {
-    color: #1e90ff;
+    color: #1e90ff; /* 이 부분은 아래에서 덮어씌워집니다. */
     text-decoration: none;
 }
 
@@ -324,4 +330,18 @@ body, html {
     font-size: 0.9em;
     color: #aaaaaa;
     margin-left: 10px;
+}
+
+
+/* 링크 색상을 LA Angels 레드로 변경 */
+a, .post-box a, .category-posts a {
+    color: #BA0021; /* LA Angels 공식 레드 */
+    text-decoration: none;
+    transition: color 0.2s ease; /* 부드러운 색상 전환 효과 */
+}
+
+/* 링크에 마우스를 올렸을 때 효과 */
+a:hover, .post-box a:hover, .category-posts a:hover {
+    color: #d4d4d4; /* 기본 텍스트 색상으로 변경 */
+    text-decoration: underline;
 }
