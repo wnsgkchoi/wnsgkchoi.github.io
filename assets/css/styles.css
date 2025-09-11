@@ -74,19 +74,19 @@ h1, h2, h3, h4, h5, h6 {
 .subcategory a { color: #cccccc; text-decoration: none; font-size: 0.9em; display: block; padding: 6px 35px; }
 .subcategory a:hover { background-color: #37373d; }
 
-/* 메인 콘텐츠 */
+/* 메인 콘텐츠 (왼쪽 정렬 수정) */
 .content {
     margin-left: 250px;
     padding: 30px;
-    width: calc(100% - 250px);
+    width: calc(100% - 250px); /* 너비를 사이드바 제외한 전체로 설정 */
     box-sizing: border-box;
 }
 
 /* 대시보드 위젯 스타일 */
 .dashboard {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* 2개의 동일한 너비의 열 */
-    gap: 30px; /* 위젯 사이의 간격 */
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
     margin-bottom: 40px;
 }
 .widget {
@@ -106,7 +106,8 @@ h1, h2, h3, h4, h5, h6 {
 .recent-posts-container { margin-top: 20px; }
 .post-list-home {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 반응형 그리드 */
+    /* 화면 크기에 따라 열 개수가 자동으로 조절되는 반응형 그리드 */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
     gap: 20px;
 }
 .post-box {
