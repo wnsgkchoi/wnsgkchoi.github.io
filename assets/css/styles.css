@@ -16,15 +16,15 @@ body, html {
 .container {
     display: flex;
     flex: 1;
-    padding-top: 50px; /* 헤더 높이만큼 공간 확보 */
-    padding-bottom: 30px; /* 푸터 높이만큼 공간 확보 */
+    padding-top: 50px;
+    padding-bottom: 30px;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Fira Code', monospace;
 }
 
-/* 상단 바 (통합) */
+/* 상단 바 */
 .header {
     display: flex;
     justify-content: space-between;
@@ -58,108 +58,100 @@ h1, h2, h3, h4, h5, h6 {
     padding: 10px 0;
     box-sizing: border-box;
     box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
 }
-.sidebar.hidden { transform: translateX(-100%); }
 .sidebar .profile { text-align: center; padding: 15px; border-bottom: 1px solid #3c3c3c; }
 .sidebar .profile img { width: 100px; height: 100px; border-radius: 50%; }
 .sidebar .profile h2 { font-size: 1.2em; margin: 10px 0 5px; }
 .sidebar .profile p { font-size: 0.9em; margin: 0; color: #888888; }
-
-.sidebar-header {
-    padding: 10px 15px;
-    font-size: 0.8em;
-    font-weight: bold;
-    color: #888888;
-    letter-spacing: 1px;
-}
-
+.sidebar-header { padding: 10px 15px; font-size: 0.8em; font-weight: bold; color: #888888; letter-spacing: 1px; }
 .sidebar .categories { list-style: none; padding: 0; margin: 0; }
-.category-title {
-    cursor: pointer;
-    font-weight: bold;
-    padding: 8px 15px;
-    display: block;
-    transition: background-color 0.2s ease;
-    user-select: none;
-}
+.category-title { cursor: pointer; font-weight: bold; padding: 8px 15px; display: block; user-select: none; }
 .category-title:hover { background-color: #37373d; }
-.category-title.open::before {
-    transform: rotate(90deg);
-}
-.category-title::before {
-    content: '▶';
-    display: inline-block;
-    margin-right: 10px;
-    transition: transform 0.2s ease-in-out;
-}
-
-.subcategory {
-    list-style: none;
-    padding-left: 15px;
-    margin: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
+.category-title.open::before { transform: rotate(90deg); }
+.category-title::before { content: '▶'; display: inline-block; margin-right: 10px; transition: transform 0.2s ease-in-out; }
+.subcategory { list-style: none; padding-left: 15px; margin: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
 .subcategory.visible { max-height: 500px; }
-.subcategory a {
-    color: #cccccc;
-    text-decoration: none;
-    font-size: 0.9em;
-    display: block;
-    padding: 6px 35px;
-    transition: background-color 0.2s ease;
-}
+.subcategory a { color: #cccccc; text-decoration: none; font-size: 0.9em; display: block; padding: 6px 35px; }
 .subcategory a:hover { background-color: #37373d; }
 
 /* 메인 콘텐츠 */
 .content {
     margin-left: 250px;
     padding: 30px;
-    width: calc(100% - 250px); /* 전체 너비에서 사이드바 너비 제외 */
+    width: calc(100% - 250px);
     box-sizing: border-box;
-    transition: margin-left 0.3s ease, width 0.3s ease;
 }
-.content.expanded { margin-left: 0; width: 100%; }
 
-.home-intro { text-align: left; margin-bottom: 40px; }
-.recent-posts h2 { text-align: left; margin-bottom: 20px; }
-
-/* 포스트 리스트 그리드 레이아웃 */
-.post-list {
+/* 대시보드 위젯 스타일 */
+.dashboard {
     display: grid;
-    /* 3개의 열을 생성하고, 각 열이 동일한 비율을 갖도록 설정 */
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 20px; /* 아이템 사이의 간격 */
+    grid-template-columns: 1fr 1fr; /* 2개의 동일한 너비의 열 */
+    gap: 30px; /* 위젯 사이의 간격 */
+    margin-bottom: 40px;
+}
+.widget {
+    background-color: #252526;
+    padding: 20px;
+    border-radius: 5px;
+}
+.widget h2 { margin-top: 0; }
+.game-result-placeholder {
+    border-left: 3px solid #BA0021;
+    padding-left: 15px;
+    color: #aaaaaa;
+}
+.game-result-placeholder p { margin: 5px 0; }
+
+/* 최신 글 목록 스타일 */
+.recent-posts-container { margin-top: 20px; }
+.post-list-home {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 반응형 그리드 */
+    gap: 20px;
 }
 .post-box {
     background-color: #2c2c2c;
     padding: 20px;
     border-radius: 5px;
-    display: flex;
-    flex-direction: column;
 }
-.post-box h3 { margin-top: 0; }
-.post-box p { flex-grow: 1; } /* 내용이 적어도 Read more 버튼이 하단에 위치하도록 함 */
 
-.divider { height: 1px; background-color: #444444; margin: 20px 0; }
-
-/* 링크 스타일 (방문한 링크 포함) */
-a, a:visited {
-    color: #BA0021; /* LA Angels 공식 레드 */
+/* 페이지네이션 스타일 */
+.pagination {
+    text-align: center;
+    margin-top: 40px;
+}
+.pagination .page-link {
+    color: #cccccc;
+    padding: 8px 15px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    margin: 0 5px;
     text-decoration: none;
 }
-a:hover {
-    text-decoration: underline;
+.pagination .page-link:hover {
+    background-color: #BA0021;
+    color: white;
+    border-color: #BA0021;
+}
+.pagination .page-link.disabled {
+    color: #666;
+    cursor: not-allowed;
+}
+.pagination .page-info {
+    color: #888;
+    margin: 0 15px;
 }
 
-/* 푸터 (LA Angels Red) */
+/* 링크 스타일 */
+a, a:visited { color: #BA0021; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* 푸터 */
 .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #BA0021; /* LA Angels Red로 변경 */
+    background-color: #BA0021;
     color: white;
     padding: 0 15px;
     font-size: 0.8em;
