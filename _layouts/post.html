@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title | default: site.title }}</title>
     <link rel="stylesheet" href="/assets/css/styles.css">
+    
     <script>
         window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$']],
-                displayMath: [['$$', '$$']]
-            },
-            options: {
-                renderActions: {
-                    addMenu: []
-                }
-            }
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
         };
     </script>
-    <script type="text/javascript" async
-        id="MathJax-script"
+    <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>    
-</head>
+    </script>
+    </head>
 <body>
     {% include header.html %}
 
@@ -49,8 +49,6 @@
 
         </main>
     </div>
-
-    <button id="toggleSidebar" class="toggle-btn">☰</button>
 
     {% include footer.html %}
 
