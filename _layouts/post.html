@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title | default: site.title }}</title>
     <link rel="stylesheet" href="/assets/css/styles.css">
-
+    
     <script>
         window.MathJax = {
           tex: {
             inlineMath: [['$', '$'], ['\\(', '\\)']],
             displayMath: [['$$', '$$'], ['\\[', '\\]']],
             processEscapes: true,
-            processEnvironments: true
+            processEnvironments: true,
+            packages: {'[+]': ['ams']}  // <--- 이 줄이 추가되었습니다.
           },
           options: {
             skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
