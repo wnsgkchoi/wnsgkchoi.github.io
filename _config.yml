@@ -15,7 +15,7 @@ plugins:
 markdown: kramdown
 kramdown:
   input: GFM
-  math_engine: mathjax
+  math_engine: nil  # 'mathjax'에서 'nil'로 변경
   syntax_highlighter_opts:
     block:
       line_numbers: false
