@@ -1,33 +1,57 @@
 {% comment %}
     File: _includes/sidebar.html
-    Description: Sidebar with corrected HTML comments for subcategories.
+    Description: Sidebar with Activity Bar integrated (Explorer & Outline).
 {% endcomment %}
-<aside class="sidebar">
-    <div class="profile">
-        <img src="/assets/img/profile.jpg" alt="Profile Picture">
-        <h2>Junha Choi</h2>
-        <p>AI Researcher & Developer</p>
-    </div>
-    
-    <div class="sidebar-header">
-        <span>EXPLORER</span>
+<aside class="sidebar-container">
+    <div class="activity-bar">
+        <div class="activity-icon active" id="tab-explorer" title="Explorer">
+            <span>&#128449;</span> 
+        </div>
+        <div class="activity-icon" id="tab-outline" title="Outline (Table of Contents)">
+            <span>&#128269;</span>
+        </div>
+        <div class="activity-icon" title="Source Control">
+            <span>&#58043;</span>
+        </div>
+        <div class="activity-icon bottom" title="Settings">
+            <span>&#9881;</span>
+        </div>
     </div>
 
-    <ul class="categories">
-        <li>
-            <span class="category-title">Research</span>
-            <ul class="subcategory hidden">
+    <div class="sidebar-content" id="sidebar-explorer">
+        <div class="sidebar-header">
+            <span>EXPLORER</span>
+        </div>
+
+        <div class="profile">
+            <img src="/assets/img/profile.jpg" alt="Profile">
+            <p><strong>Junha Choi</strong></p>
+        </div>
+
+        <ul class="categories">
+            <li>
+                <span class="category-title">Research</span>
+                <ul class="subcategory hidden">
+                    <li><a href="/categories/Research_LLM">LLM</a></li>
+                    <li><a href="/categories/Research_Paper_Review">Paper Review</a></li>
                 </ul>
-        </li>
-        <li>
-            <span class="category-title">Lecture</span>
-            <ul class="subcategory hidden">
+            </li>
+            <li>
+                <span class="category-title">Lecture</span>
+                <ul class="subcategory hidden">
+                    <li><a href="/categories/Lecture_Deep_Learning">Deep Learning</a></li>
+                    <li><a href="/categories/Lecture_NLP">NLP</a></li>
+                    <li><a href="/categories/Lecture_MATH200">Diff. Equation</a></li>
                 </ul>
-        </li>
-        <li>
-            <span class="category-title">Sports</span>
-            <ul class="subcategory hidden">
-                </ul>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sidebar-content hidden" id="sidebar-outline">
+        <div class="sidebar-header">
+            <span>OUTLINE</span>
+        </div>
+        <ul class="outline-list" id="outline-content">
+        </ul>
+    </div>
 </aside>

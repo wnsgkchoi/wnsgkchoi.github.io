@@ -8,16 +8,22 @@
     
     <script>
         window.MathJax = {
-          tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true,
-            processEnvironments: true,
-            packages: {'[+]': ['ams']}  // <--- 이 줄이 추가되었습니다.
-          },
-          options: {
-            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-          }
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                packages: {'[+]': ['ams']},
+                
+                /* [추가됨] 매크로 설정: argmin, argmax 정의 */
+                macros: {
+                argmin: "\\operatorname*{argmin}",
+                argmax: "\\operatorname*{argmax}"
+                }
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
         };
     </script>
     <script type="text/javascript" id="MathJax-script" async
@@ -31,23 +37,31 @@
         {% include sidebar.html %}
 
         <main class="content">
-            <header class="post-header">
-                <h1 class="post-title">{{ page.title }}</h1>
-                <div class="post-meta">
-                    <span>Category: {{ page.categories | join: ", " }}<br><br></span>
-                    <span>Published on {{ page.date | date: "%b %d, %Y" }}</span>
-                    {% if page.last_modified_at %}
-                    <span>Last updated on {{ page.last_modified_at | date: "%b %d, %Y" }}<br></span>
-                    {% endif %}
+            <div class="editor-tabs">
+                <div class="tab active">
+                    <span class="tab-icon">M↓</span> <span class="tab-name">{{ page.title }}</span>
+                    <span class="tab-close">&times;</span>
                 </div>
-            </header>
-
-            <div class="divider"></div>
-
-            <div class="post-content">
-                {{ content }}
             </div>
 
+            <div class="breadcrumbs">
+                src > posts > {{ page.date | date: "%Y" }} > {{ page.title }}
+            </div>
+
+            <div class="post-content-wrapper">
+                <header class="post-header">
+                    <h1 class="post-title">{{ page.title }}</h1>
+                    <div class="post-meta">
+                        <span>Updated: {{ page.date | date: "%b %d, %Y" }}</span>
+                    </div>
+                </header>
+
+                <div class="divider"></div>
+
+                <div class="post-content">
+                    {{ content }}
+                </div>
+            </div>
         </main>
     </div>
 

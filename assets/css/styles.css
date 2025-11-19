@@ -11,6 +11,7 @@ body, html {
     color: #d4d4d4;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
 .container {
@@ -46,122 +47,171 @@ h1, h2, h3, h4, h5, h6 {
 .header a { color: #cccccc; text-decoration: none; margin-right: 20px; }
 .header-title { flex: 1; text-align: center; font-weight: bold; font-size: 1.2em; }
 
-/* 사이드바 */
-.sidebar {
-    background-color: #252526;
-    color: #cccccc;
-    width: 250px;
-    height: 100%;
+/* =========================================
+   VS Code Layout Styles (Revised)
+   ========================================= */
+
+/* 1. Sidebar Container */
+.sidebar-container {
+    display: flex;
     position: fixed;
     top: 50px;
     left: 0;
-    padding: 10px 0;
-    box-sizing: border-box;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    /* Footer(30px)를 고려하지 않고 화면 끝까지 채우되 헤더만큼 뺌 */
+    height: calc(100vh - 50px); 
+    z-index: 900;
+    background-color: #252526;
 }
-.sidebar .profile { text-align: center; padding: 15px; border-bottom: 1px solid #3c3c3c; }
-.sidebar .profile img { width: 100px; height: 100px; border-radius: 50%; }
-.sidebar .profile h2 { font-size: 1.2em; margin: 10px 0 5px; }
-.sidebar .profile p { font-size: 0.9em; margin: 0; color: #888888; }
+
+/* 2. Activity Bar (Leftmost Icons) */
+.activity-bar {
+    width: 50px;
+    background-color: #333333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    border-right: 1px solid #252526;
+}
+
+.activity-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #858585;
+    opacity: 0.6;
+}
+
+.activity-icon:hover { color: #ffffff; opacity: 1; }
+.activity-icon.active {
+    border-left: 2px solid #BA0021; /* Angels Red Accent */
+    color: #ffffff;
+    opacity: 1;
+    background-color: #252526;
+}
+.activity-icon.bottom { margin-top: auto; margin-bottom: 60px; } /* Footer 위로 띄움 */
+
+/* 3. Sidebar Content (Explorer & Outline) */
+.sidebar-content {
+    width: 220px;
+    background-color: #252526;
+    border-right: 1px solid #1e1e1e;
+    padding: 10px 0;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.sidebar-content.hidden { display: none; }
+
 .sidebar-header { padding: 10px 15px; font-size: 0.8em; font-weight: bold; color: #888888; letter-spacing: 1px; }
-.sidebar .categories { list-style: none; padding: 0; margin: 0; }
+
+/* Explorer Elements */
+.sidebar-content .profile { text-align: center; padding: 20px 10px; border-bottom: 1px solid #3c3c3c; }
+.sidebar-content .profile img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+.sidebar-content .categories { list-style: none; padding: 0; margin: 0; }
 .category-title { cursor: pointer; font-weight: bold; padding: 8px 15px; display: block; user-select: none; }
 .category-title:hover { background-color: #37373d; }
-.category-title.open::before { transform: rotate(90deg); }
-.category-title::before { content: '▶'; display: inline-block; margin-right: 10px; transition: transform 0.2s ease-in-out; }
 .subcategory { list-style: none; padding-left: 15px; margin: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
 .subcategory.visible { max-height: 500px; }
 .subcategory a { color: #cccccc; text-decoration: none; font-size: 0.9em; display: block; padding: 6px 35px; }
 .subcategory a:hover { background-color: #37373d; }
 
-/* 메인 콘텐츠 (Flexbox를 이용한 확실한 왼쪽 정렬) */
-.content {
-    margin-left: 250px;
-    padding: 30px;
-    width: calc(100% - 250px);
-    box-sizing: border-box;
-    
-    /* Flexbox 설정 추가 */
-    display: flex;
-    flex-direction: column; /* 아이템을 위에서 아래로 쌓음 */
-    align-items: stretch; /* 아이템이 컨테이너 너비를 꽉 채우도록 함 */
-}
-
-/* 대시보드 위젯 스타일 */
-.dashboard {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    margin-bottom: 40px;
-    width: 100%; /* 부모 컨테이너(content)의 너비를 따르도록 함 */
-}
-.widget {
-    background-color: #252526;
-    padding: 20px;
-    border-radius: 5px;
-}
-.widget h2 { margin-top: 0; }
-.game-result-placeholder {
-    border-left: 3px solid #BA0021;
-    padding-left: 15px;
-    color: #aaaaaa;
-}
-.game-result-placeholder p { margin: 5px 0; }
-
-/* 최신 글 목록 스타일 */
-.recent-posts-container { 
-    margin-top: 20px;
-    width: 100%; /* 부모 컨테이너(content)의 너비를 따르도록 함 */
-}
-.post-list-home {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-    gap: 20px;
-}
-.post-box {
-    background-color: #2c2c2c;
-    padding: 20px;
-    border-radius: 5px;
-}
-
-/* 페이지네이션 스타일 */
-.pagination {
-    text-align: center;
-    margin-top: 40px;
-    width: 100%; /* 부모 컨테이너(content)의 너비를 따르도록 함 */
-}
-.pagination .page-link {
+/* Outline (TOC) Elements */
+.outline-list { list-style: none; padding: 0; margin: 0; }
+.outline-list a {
+    display: block;
+    padding: 4px 20px;
     color: #cccccc;
-    padding: 8px 15px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    margin: 0 5px;
     text-decoration: none;
+    font-size: 0.85rem;
+    border-left: 2px solid transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.pagination .page-link:hover {
-    background-color: #BA0021;
-    color: white;
-    border-color: #BA0021;
-}
-.pagination .page-link.disabled {
-    color: #666;
-    cursor: not-allowed;
-}
-.pagination .page-info {
-    color: #888;
-    margin: 0 15px;
+.outline-list a:hover { background-color: #37373d; color: #ffffff; }
+/* TOC Indentation */
+.outline-h1 { padding-left: 15px !important; font-weight: bold; }
+.outline-h2 { padding-left: 25px !important; }
+.outline-h3 { padding-left: 35px !important; color: #999 !important; }
+
+
+/* 4. Content Area (Right side) */
+.content {
+    margin-left: 270px !important; /* 사이드바 공간 확보 */
+    width: calc(100% - 270px) !important;
+    padding: 0 !important;
+    
+    display: block !important; 
+    
+    min-height: 100vh;
+    background-color: #1e1e1e;
 }
 
-/* 링크 스타일 */
+/* Tab Bar */
+.editor-tabs {
+    background-color: #252526;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    border-bottom: 1px solid #1e1e1e;
+}
+
+.tab {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    height: 35px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+    border-top: 2px solid #BA0021; /* Angels Red */
+    border-right: 1px solid #252526;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.tab-icon { margin-right: 8px; color: #BA0021; }
+.tab-close { margin-left: auto; font-size: 1.2rem; margin-bottom: 2px; }
+
+/* Breadcrumbs */
+.breadcrumbs {
+    background-color: #1e1e1e;
+    color: #858585;
+    font-size: 0.85rem;
+    padding: 5px 20px;
+    border-bottom: 1px solid #333;
+}
+
+/* Post Content Wrapper */
+.post-content-wrapper {
+    padding: 30px 40px;
+    max-width: 100%; /* 화면 꽉 차게 */
+    box-sizing: border-box;
+}
+
+/* Pagination */
+.pagination { text-align: center; margin-top: 40px; width: 100%; }
+.pagination .page-link {
+    color: #cccccc; padding: 8px 15px; border: 1px solid #444; border-radius: 5px; margin: 0 5px; text-decoration: none;
+}
+.pagination .page-link:hover { background-color: #BA0021; color: white; border-color: #BA0021; }
+.pagination .page-link.disabled { color: #666; cursor: not-allowed; }
+
+/* Common Links */
 a, a:visited { color: #BA0021; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* 푸터 */
+/* Footer */
 .footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #BA0021;
+    background-color: #BA0021; /* Angels Red */
     color: white;
     padding: 0 15px;
     font-size: 0.8em;
@@ -174,8 +224,241 @@ a:hover { text-decoration: underline; }
 }
 .footer-left, .footer-right { display: flex; align-items: center; }
 .footer span { margin-right: 15px; cursor: pointer; }
-.footer span:hover { background-color: rgba(0, 0, 0, 0.2); }
 .footer a, .footer a:visited { color: white; text-decoration: none; }
 
-/* 토글 버튼 */
-.toggle-btn { display: none; }
+/* =========================================
+   Custom Components
+   ========================================= */
+
+/* Image Styles */
+.post-content img {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Custom Callout Box (Definition/Theorem) */
+.callout {
+    border: 1px solid #BA0021;
+    border-radius: 6px;
+    margin: 20px 0;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.callout-header {
+    background-color: #BA0021;
+    color: #ffffff;
+    padding: 8px 15px;
+    font-weight: bold;
+    font-family: 'Fira Code', monospace;
+    font-size: 1em;
+    border-bottom: 1px solid #9e001c;
+}
+.callout-body {
+    background-color: #FFF5F5;
+    color: #2c2c2c;
+    padding: 15px;
+}
+.callout-body p:last-child { margin-bottom: 0; }
+
+/* =========================================
+   Post Header & Divider Styling
+   ========================================= */
+
+/* 제목 영역 여백 확보 */
+.post-header {
+    margin-bottom: 20px; /* 구분선과의 간격 */
+}
+
+.post-title {
+    margin-bottom: 10px; /* 제목과 날짜 사이 간격 */
+}
+
+.post-meta {
+    color: #858585;
+    font-size: 0.9rem;
+}
+
+/* 확실한 경계선 (Divider) 스타일링 */
+.divider {
+    height: 1px;             /* 선 두께 */
+    background-color: #3c3c3c; /* 선 색상 (은은한 회색) */
+    margin-bottom: 40px;     /* 본문과의 간격 (충분히 띄움) */
+    width: 100%;
+}
+
+/* =========================================
+   VS Code "Get Started" Page Styling
+   ========================================= */
+
+/* assets/css/styles.css 수정 */
+
+.welcome-container {
+    /* [1] 포스트 페이지처럼 너비 제한을 완전히 해제 (1200px -> 100%) */
+    width: 100%;
+    max-width: 100%; 
+    
+    /* [2] 정렬 강제 초기화 */
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    margin-top: 0;
+    margin-bottom: 0;
+    
+    /* [3] 핵심 수정: 왼쪽 패딩을 50px -> 20px로 축소 */
+    /* 탭 바의 텍스트 시작점(약 15~20px)과 본문 시작점을 일치시켜 '칼각' 정렬 */
+    padding: 40px 20px; 
+    
+    box-sizing: border-box;
+    text-align: left !important; /* 텍스트 왼쪽 정렬 강제 */
+    color: #cccccc;
+}
+
+/* 1. Header */
+.welcome-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px; /* 헤더와 본문 사이 간격도 조금 줄임 */
+}
+
+.welcome-header .logo-icon {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #BA0021; /* Angels Red */
+    margin-right: 20px;
+    font-family: 'Fira Code', monospace;
+}
+
+.header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.header-text .subtitle {
+    margin: 5px 0 0 0;
+    font-size: 1.2rem;
+    color: #858585;
+}
+
+/* 2. Grid Layout */
+.welcome-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 80px;
+    
+    /* [핵심 원인 해결] 그리드 내용물이 가운데로 모이려는 성질 차단 -> 왼쪽 시작 */
+    justify-content: start !important; 
+    justify-items: start !important;
+    
+    /* 혹시 모를 여백 제거 */
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+
+.welcome-grid h2 {
+    font-size: 1.2rem;
+    font-weight: normal;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+/* Start List Styling */
+.start-list, .recent-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.start-list li, .recent-list li {
+    margin-bottom: 8px;
+}
+
+.start-list a {
+    display: flex;
+    align-items: flex-start; /* 아이콘과 텍스트 상단 정렬 */
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 4px;
+    color: #3794ff; /* Link Color (VS Code Blue-ish) */
+}
+
+.start-list a:hover, .recent-list a:hover {
+    background-color: #2a2d2e; /* Hover effect */
+}
+
+.start-list .icon {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    color: #cccccc;
+}
+
+.list-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-content .title {
+    color: #3794ff; /* Link Color */
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.list-content .desc {
+    color: #858585;
+    font-size: 0.85rem;
+}
+
+/* Recent List Styling (Simpler) */
+.recent-list a {
+    display: block;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 4px;
+}
+
+.recent-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px; /* 제목과 경로 사이 최소 간격 */
+}
+
+.recent-row .file-name {
+    color: #3794ff;
+    font-size: 0.95rem;
+    /* 긴 제목은 말줄임표 처리 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1; /* 남은 공간 차지 */
+}
+
+.recent-row .file-path {
+    color: #666666;
+    font-size: 0.8rem;
+    font-family: 'Fira Code', monospace;
+    white-space: nowrap; /* 경로가 줄바꿈되지 않도록 강제 */
+}
+
+.more-link {
+    color: #3794ff !important;
+    font-style: italic;
+    padding-left: 8px;
+}
+
+/* 3. Footer Checkbox */
+.welcome-footer {
+    margin-top: 50px;
+    font-size: 0.9rem;
+    color: #858585;
+}
+
+.section-start, .section-recent {
+    width: 100%;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}

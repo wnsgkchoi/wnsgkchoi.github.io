@@ -16,49 +16,78 @@ layout: default
         {% include sidebar.html %}
 
         <main class="content">
-            <div class="dashboard">
-                <div class="widget">
-                    <h2>Welcome to Stadium</h2>
-                    <p>이 공간은 기술, 스포츠, 그리고 다양한 관심사를 기록하는 개인 블로그입니다. 편하게 둘러보세요!</p>
-                </div>
-
-                <div class="widget">
-                    <h2>LA Angels</h2>
-                    <div class="game-result-placeholder">
-                        <p><strong>Record:</strong> --W / --L</p>
-                        <p><strong>Last Game:</strong> 경기 결과 정보가 여기에 표시됩니다.</p>
-                        <small>(API 연동 예정)</small>
-                    </div>
+            <div class="editor-tabs">
+                <div class="tab active">
+                    <span class="tab-icon" style="color: #BA0021;">S</span>
+                    <span class="tab-name">Get Started</span>
+                    <span class="tab-close">&times;</span>
                 </div>
             </div>
 
-            <div class="recent-posts-container">
-                <h2>Recent Posts</h2>
-                <div class="post-list-home">
-                    {% for post in paginator.posts %}
-                    <div class="post-box">
-                        <h3>{{ post.title }}</h3>
-                        <p class="post-meta">{{ post.date | date: "%b %d, %Y" }}</p>
-                        <a href="{{ post.url }}">Read more...</a>
+            <div class="welcome-container">
+                <div class="welcome-header">
+                    <div class="logo-icon">S</div> <div class="header-text">
+                        <h1>Stadium</h1>
+                        <p class="subtitle">Editing evolved. Recording daily life.</p>
                     </div>
-                    {% endfor %}
                 </div>
-            </div>
 
-            <div class="pagination">
-                {% if paginator.previous_page %}
-                    <a href="{{ paginator.previous_page_path }}" class="page-link">‹ Newer</a>
-                {% else %}
-                    <span class="page-link disabled">‹ Newer</span>
-                {% endif %}
+                <div class="welcome-grid">
+                    <div class="section-start">
+                        <h2>Start</h2>
+                        <ul class="start-list">
+                            <li>
+                                <a href="/about">
+                                    <span class="icon">&#128100;</span> <div class="list-content">
+                                        <span class="title">About Me</span>
+                                        <span class="desc">Introduce myself</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/portfolio">
+                                    <span class="icon">&#128193;</span> <div class="list-content">
+                                        <span class="title">Portfolio</span>
+                                        <span class="desc">Check my projects</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/{{ site.github_username }}" target="_blank">
+                                    <span class="icon">&#128427;</span> <div class="list-content">
+                                        <span class="title">GitHub Repository</span>
+                                        <span class="desc">Clone from GitHub</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-                <span class="page-info">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+                    <div class="section-recent">
+                        <h2>Recent</h2>
+                        <ul class="recent-list">
+                            {% for post in paginator.posts limit:5 %}
+                            <li>
+                                <a href="{{ post.url }}">
+                                    <div class="recent-row">
+                                        <span class="file-name">{{ post.title }}</span>
+                                        <span class="file-path">src/posts/{{ post.date | date: "%Y" }}</span>
+                                    </div>
+                                </a>
+                            </li>
+                            {% endfor %}
+                            <li>
+                                <a href="#" class="more-link">More...</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-                {% if paginator.next_page %}
-                    <a href="{{ paginator.next_page_path }}" class="page-link">Older ›</a>
-                {% else %}
-                    <span class="page-link disabled">Older ›</span>
-                {% endif %}
+                <div class="welcome-footer">
+                    <label>
+                        <input type="checkbox" checked disabled> Show welcome page on startup
+                    </label>
+                </div>
             </div>
         </main>
     </div>

@@ -22,13 +22,14 @@ Regression이 무엇인가. input $x$에 대한 output $y$의 dependence를 모�
 $$
 y = f(x) + \epsilon
 $$
+
 이때, $y$ 는 output, $x$는 input, $\epsilon$은 noise 또는 관측되지 않은 factor를 의미한다.  
 
 Regression의 learning goal은 MSE로, 예측값과 실제 output 사이의 오차를 제곱한 값의 평균이다.  
 
 $$
 \begin{align}
-\Epsilon(f) &= \mathbb{E}\left[ |y - f(x)|^{2} \right] \\
+\mathcal{E}(f) &= \mathbb{E}\left[ |y - f(x)|^{2} \right] \\
             &= \int \int |y - f(x)|^{2} p(x,y) dx dy
 \end{align}
 $$
@@ -37,7 +38,7 @@ $$
 
 $$
 \begin{align}
-\frac{\partial \Epsilon(f)}{\partial f(x)} &= \int \int - 2(y - f(x))p(x, y) dx dy \\
+\frac{\partial \mathcal{E}(f)}{\partial f(x)} &= \int \int - 2(y - f(x))p(x, y) dx dy \\
                                            &= \int \int - 2yp(x,y) + f(x)p(x,y) dx dy \\
                                            &= \int \int -2y p(x) p(y | x) dx dy + 2y p(x) p(y | x) dx dy = 0
 \end{align}
@@ -54,7 +55,9 @@ $$
 
 이때, $p(x) \geq 0 \forall x \in \mathbb{R}$ 이므로, 이 적분 식이 0이 되기 위해서는 $\mathbb{E}\left[ y | x \right] = f(x)$ 이 성립해야 한다.  
 
-참고로, 이 풀이에 오류가 있다고 생각하는데, (마지막 근거가 부족하다. 꼭 저 두 term이 같지 않더라도 적분값을 0으로 만들 여지는 충분하기 때문). 다만 이 식이 모든 데이터 분포 $p(x)$ 에 대해 성립해야 하고, $f(x) = \mathbb{E}\left[ y|x \right]$ 는 확실히 이 식의 답이 되므로, 일단 이렇게 일반화를 할 수 있긴 하다. 다만, 더 정확하게 풀기 위해서는 다음과 같이 식을 시작하면 된다.  
+참고로, 이 풀이에 오류가 있다고 생각하는데, (마지막 근거가 부족하다. 꼭 저 두 term이 같지 않더라도 적분값을 0으로 만들 여지는 충분하기 때문). 다만 이 식이 모든 데이터 분포 $p(x)$ 에 대해 성립해야 하고, 
+$ f(x) = \mathbb{E}\left[ y|x \right] $
+는 확실히 이 식의 답이 되므로, 일단 이렇게 일반화를 할 수 있긴 하다. 다만, 더 정확하게 풀기 위해서는 다음과 같이 식을 시작하면 된다.  
 
 $$
 \begin{align}
@@ -63,6 +66,7 @@ $$
 $$
 
 이때, $p(x) \geq 0 \quad \forall x \in \mathbb{R}$ 이므로, 이 식을 최소화하기 위해서는 안쪽에 있는 적분값을 항상 최소로 만드는 f(x)를 찾으면 된다. 즉, 목표가 다음과 같이 바뀌는 것이다.  
+
 $$
 \begin{align}
 \min_{f} \int |y - f(x)|^{2} p(y|x) dy
@@ -85,16 +89,20 @@ y = \theta^{T}x = x^{T}\theta
 \end{align}
 $$
 
-데이터가 N개 있는 dataset $\mathcal{D} = \left\{ (x_1, y_1), \ldots, (x_N, y_N) \right\}$ 에 대해, 다음과 같이 Notation을 적을 수도 있다.  
+데이터가 N개 있는 dataset 
+$\mathcal{D} = \left\\{ (x_1, y_1), \ldots, (x_N, y_N) \right\\}$
+에 대해, 다음과 같이 Notation을 적을 수도 있다.  
 
 $$
 \begin{align}
 y = X\theta
 \end{align}
 $$
+
 이때, $y \in \mathbb{R}^{N}$, $X \in \mathbb{R}^{N \times d}$ 가 된다.  
 
 이 모델은 너무 간단해보인다. 왜냐하면, input에 대해 선형적인 모델만을 모델링하기 때문이다. 하지만, linear regression에 basis function을 도입한다면 이런 단점이 상쇄될 수 있다. **basis function**은 element를 원래 space에서 다른 space로 매핑하는 function을 의미한다. 예를 들어, 다음과 같은 basis function이 있다고 가정해보자.  
+
 $$
 \begin{align}
 \phi(x) = \begin{bmatrix} 1 \\ x \\ x^{2} \\ x^{3} \end{bmatrix}
@@ -114,36 +122,51 @@ basis function은 기본적으로, 데이터에서 useful information을 잡을 
 
 이렇게 basis function을 적용한 Linear Regression을 다음과 같이 나타낼 수 있다.  
 
-> **Linear Regression**  
-> </br>
-> Linear Regression은 basis function $\phi_{\ell}: \mathbb{R}^{D} \rightarrow \mathbb{R}_{\ell \in [L]}$과의 linear combination인 model $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ 를 말한다.  
-> $$
-> f(x) = \sum_{\ell = 1}^{L} w_{\ell}\phi_{\ell}(x) = w^{T}\phi(x)
-> $$
-> 이때, $x \in \mathbb{R}^{D}$, $w = \begin{bmatrix} w_1 \\ w_2 \\ \vdots \\ w_L \end{bmatrix}$, $\phi(x) = \begin{bmatrix} \phi_{1}(x) \\ \phi_{2}(x) \\ \vdots \\ \phi_{L}(x) \end{bmatrix}$
+<div class="callout">
+  <div class="callout-header">Linear Regression</div>
+  <div class="callout-body" markdown="1">
 
-</br>
+Linear Regression은 basis function $\phi_{\ell}$ 과의 linear combination이다.
+
+$$
+f(x) = \sum_{\ell = 1}^{L} w_{\ell}\phi_{\ell}(x) = w^{T}\phi(x)
+$$
+
+이때, $w$는 weight vector이다.
+
+  </div>
+</div>
+<br>
 
 참고로, 위의 linear model은 $x$ 에 대해서는 nonlinear하겠지만, $w$에 대해서는 linear하긴 하다. (그래서 linear regression이라고 할 수 있는 건가..)  
 
-![Fig 1. Polynomial Regression](pic/chap2/2-1.png)  
+![Fig 1. Polynomial Regression](/assets/img/CSED515/chap2/2-1.png){: width="500"}  
+
 $\ell$ 로 polymonial의 차수를 조절한다. 이때, 차수가 큰 것이 표현력이 좋아서 항상 좋다고 생각할 수 있는데, 위의 figure에서 볼 수 있듯이, 실제 data의 분포보다 더 복잡한 함수로 over-fitting되는 문제가 발생할 수 있다.  
 
-한편, basis function을 사용하는 Linear Regression 모델도 learning objective로 MSE를 사용할 수 있다. Training data $\left\{ x_{n} \in \mathbb{R}^{D}, y_{n} \in \mathbb{R} \right\}_{n \in [N]}$에 대해, 아래의 식을 최소로 만드는 weight vector $ w = \left[ w_{1}, \ldots, w_{L} \right]^{T}$ 를 찾는 것이 목표가 된다.  
+한편, basis function을 사용하는 Linear Regression 모델도 learning objective로 MSE를 사용할 수 있다. Training data 
+$\left\{ x_{n} \in \mathbb{R}^{D}, y_{n} \in \mathbb{R} \right\}_{n \in [N]}$
+에 대해, 아래의 식을 최소로 만드는 weight vector 
+$ w = \left[ w_{1}, \ldots, w_{L} \right]^{T}$
+를 찾는 것이 목표가 된다.  
+
 $$
-\Epsilon_{LS}(w) = \frac{1}{2} \sum_{n=1}^{N} (y_{n} - w^{T}\phi(x_{n}))^{2} = \frac{1}{2} |y - \Phi w|^{w}
-$$
+\mathcal{E}_{LS}(w) = \frac{1}{2} \sum_{n=1}^{N} (y_{n} - w^{T}\phi(x_{n}))^{2} = \frac{1}{2} |y - \Phi w|^{w}
+$$  
+
 이떄, $y = [y_{1}, \ldots, y_{N}]^{T}$, $\Phi = \begin{bmatrix} \phi_{1}(x_{1}) & \phi_{2}(x_{1}) & \cdots & \phi_{L}(x_{1}) \\ \phi_{1}(x_{2}) & \phi_{2}(x_{2}) & \cdots & \phi_{L}(x_{2}) \\ \vdots & \vdots & & \vdots \\ \phi_{1}(x_{N}) & \phi_{2}(x_{N}) & \cdots & \phi_{L}(x_{N}) \end{bmatrix} \in \mathbb{R}^{N \times L}$  
 
 이 식을 $w$ 에 대해 편미분하여 0이 되는 $w$를 찾으면 다음과 같다.  
 
 $$
 \begin{align}
-\frac{\partial}{\partial w} \Epsilon_{LS}(w) &= \frac{\partial}{\partial w} \frac{1}{2} |y - \Phi w|^{2} \\
+\frac{\partial}{\partial w} \mathcal{E}_{LS}(w) &= \frac{\partial}{\partial w} \frac{1}{2} |y - \Phi w|^{2} \\
                                              &= - \Phi^{T}(y - \Phi w) = 0
 \end{align}
 $$
+
 이 식을 정리하면,  
+
 $$
 \begin{align}
 &\Phi^{T}y = \Phi^{T}\Phi w \\
@@ -153,43 +176,55 @@ $$
 
 참고로 $\Phi^{†}$ 은 $\Phi$ 의 Moore-Penrose pseudo-inverse로, $\Phi^{T}\Phi$ 가 inverible하면 그대로 계산하면 되고, 만약 invertible하지 않더라도, 여전히 존재하는 행렬이다. 이렇게 closed-form solution이 존재하지만, 사실 gradient descent method를 사용해도 괜찮다.  
 
-![Fig 2. Guassian Noise](pic/chap2/2-2.png)  
+![Fig 2. Guassian Noise](/assets/img/CSED515/chap2/2-2.png){: width="500"} 
 
 이 Least Square method는 놀랍게도 Maximum Likelihood Estimation으로 해석한 해와 같다. Output $y$ 가 $f(x_{n}) = w^{T}\phi(x_{n})$ 과 Gaussian noise $\epsilon \sim \mathcal{N}\left( 0, \sigma^{2} \right)$ 의 합으로 나타난다고 하자. 즉,  
+
 $$
 \begin{align}
 y = w^{T}\phi(x) + \epsilon
 \end{align}
 $$
+
 이라 하자. (위의 figure는 Gaussian noise를 적용한 linear model을 나타낸 것이다.) 이때, 이 식의 log-likelihood $\mathcal{L}$ 은 다음과 같이 나타난다.  
+
 $$
 \begin{align}
 \mathcal{L} \propto \log p(y | \Phi, w) &= \sum_{n=1}^{N} \log p(y_{n} | \phi(x_{n}), w) \\
-                                        &= -\frac{N}{2} \log \sigma^{2} - \frac{N}{2} \log 2\pi - \frac{1}{\sigma^{2}} \underbrace{\left( \frac{1}{2} \sum_{n=1}^{N} (y_{n} - w^{T}\phi(x_{n}))^{2} \right)}_{=\Epsilon_{LS}}
+                                        &= -\frac{N}{2} \log \sigma^{2} - \frac{N}{2} \log 2\pi - \frac{1}{\sigma^{2}} \underbrace{\left( \frac{1}{2} \sum_{n=1}^{N} (y_{n} - w^{T}\phi(x_{n}))^{2} \right)}_{\mathcal{E}_{LS}}
 \end{align}
 $$
 
-MLE는 likelihood를 최대로 만드는 것으로, 이 식을 최대로 만들기 위해서는 $\Epsilon_{LS}$ 부분을 minimize해야 한다. 즉, additive Gaussian noise 가정 하에서, $w_{LS} = w_{MLE}$ 가 성립한다.  
+MLE는 likelihood를 최대로 만드는 것으로, 이 식을 최대로 만들기 위해서는 
+$\mathcal{E}\_{LS}$ 부분을 minimize해야 한다. 즉, additive Gaussian noise 가정 하에서, $w\_{LS} = w\_{MLE}$ 가 성립한다.  
+
+<br><br>
 
 ## 2. Ridge Regression - Overfitting and Regularization  
 
 위에서 잠깐 언급했듯, parameter의 개수가 많아지면, 데이터의 분포 패턴을 학습하는 것이 아닌, 데이터 자체를 memorizing하는 경향이 생기는데, 이를 overfitting 이라고 한다. Over-fitting이 나타난 것을 어떻게 알 수 있는가 하면, training loss는 작은데, test loss가 크게 차이가 난다면, over-fitting이 발생한 것이다. 이를 해결하기 위해, loss에 새로운 term (regularization)을 추가하는 방안을 떠올릴 수 있다. 일반적으로 overfitting은 parameter의 magnitude가 클 때 발생하므로, 파라미터의 magnitude 자체를 loss에 추가한다면 overfitting을 어느 정도 방지할 수 있다. 이 강의자료에서는 두 개의 Regularizer를 살펴보는데, 그 중 하나가 Ridge다.  
 
-> **Ridge Regression**  
-> </br>
-> Ridge regression은 다음을 최소화한다.  
-> $$
-> \Epsilon = \frac{1}{2} |y - \Phi w|^{2} + \frac{\lambda}{2} |w|^{2}
-> $$
-> 이때 $\lambda$ 는 ridge parameter다.  
+<div class="callout">
+  <div class="callout-header">Ridge Regression</div>
+  <div class="callout-body" markdown="1">
 
-</br>
+Ridge regression은 다음을 최소화한다.  
+
+$$
+\mathcal{E} = \frac{1}{2} |y - \Phi w|^{2} + \frac{\lambda}{2} |w|^{2}
+$$
+
+이때 $\lambda$ 는 ridge parameter다.  
+
+  </div>
+</div>
+<br>
 
 이 loss를 최소화하는 $w$ 는 derivative를 0으로 만드는 $w$ 를 구하여 찾을 수 있다. 구체적으로 다음과 같다.  
 
 $$
 \begin{align}
-\frac{\partial \Epsilon}{\partial w} = \Phi^{T} (y - \Phi w) + \lambda w = 0
+\frac{\partial \mathcal{E}}{\partial w} = \Phi^{T} (y - \Phi w) + \lambda w = 0
 \end{align}
 $$
 
@@ -203,6 +238,7 @@ $$
 $$
 
 이 식은 zero-mean Gaussian prior 를 적용한 linear model의 MAP와 동일한 form이다. $w$ 의 분포가 다음과 같을 때,  
+
 $$
 \begin{align}
 p(w) = \mathcal{N} \left( w | 0, \Sigma \right)
@@ -218,6 +254,7 @@ p (y | \Phi , w) = \mathcal{N} (y | \Phi w, \sigma^{2}I)
 $$
 
 가 되며, 이때, posterior는 다음과 같으므로,  
+
 $$
 \begin{align}
 p(w | y, \Phi) = \frac{p(y | \Phi, w) p(w)}{p(y | Phi)}
@@ -284,29 +321,40 @@ $$
 
 $\Sigma = \frac{\sigma^{2}}{\lambda}I$ 이면, MAP가 ridge regression과 동일해짐을 알 수 있다.  
 
+<br><br>
+
 ## 3. Lasso Regression  
 
 Lasso Regression은 Ridge Regression과 다른 regularizer를 사용한다.  
 
-> **Lasso Regression**  
-> </br>
-> Lasso regression은 다음을 최소화한다.  
-> $$
-> \Epsilon(w) = \frac{1}{2} |y - \Phi w|^{2} + \lambda |w|_{1}
-> $$
-> 이때 $\lambda$ 는 trade-off를 control한다.  
+<div class="callout">
+  <div class="callout-header">Lasso Regression</div>
+  <div class="callout-body" markdown="1">
 
-</br>  
+Lasso regression은 다음을 최소화한다.  
+
+$$
+\mathcal{E}(w) = \frac{1}{2} |y - \Phi w|^{2} + \lambda |w|_{1}
+$$
+
+이때 $\lambda$ 는 trade-off를 control한다.  
+
+  </div>
+</div>
+<br>
 
 regularizer가 $\ell_{1}$ norm이 되었다. 이와 같이 $\ell_{1}$ norm을 사용하면 objective가 not differentiable해지는 단점이 존재한다. 하지만 $\ell_{1}$ norm을 사용할 떄의 장점도 존재한다. 바로, 일종의 feature selector로 작용할 수 있다는 점이다.  
 
-![Fig 3. Lasso vs Ridge](pic/chap2/2-3.png)  
+![Fig 3. Lasso vs Ridge](/assets/img/CSED515/chap2/2-3.png){: width="500"} 
 
 위의 Figure에서 볼 수 있듯, L1 norm을 사용하게 되면, regularization으로 인한 boundary가 각지게 된다.  이렇게 되면, optimal point가 L2 norm에 비해 feature axis에 형성될 확률이 높아진다. 위의 예시를 보면, L2의 optimal point는 $w_1$ 과 $w_2$ 를 모두 0이 아닌 값으로 만드는 반면, L1의 optimal point는 $w_1$ 의 값을 0으로 만들고, $w_2$ 의 값만 0이 아니게 된다. 즉, L1 norm은 regression에서 비교적 의미 없는 feature (여기에서는 $w_1$)를 필터링해주는 역할을 수행할 수 있다.  
+
+<br><br>
 
 ## 4. Non-linear Regression and Gradient Method  
 
 Learning problem은 optimization problem으로 정의될 수 있다. 구체적으로, sum loss function을 최소화하는 model을 찾는 optimization problem으로 정의될 수 있다.  
+
 $$
 \begin{align}
 \argmin_{\theta} L(\theta) = \argmin_{\theta} \sum_{i=1}^{N} \ell \left( y_{i}, f(x_{i}, \theta) \right)
@@ -314,6 +362,7 @@ $$
 $$
 
 예를 들어, training dataset에 대해 $\theta$ 로 나타낸 learning objective가 다음과 같은 모델을 생각해보자.  
+
 $$
 \begin{align}
 L(\theta) = \sum_{i=1}^{N}\ell(y_{i}, f(x_{i}, \theta)) = \theta^{4} + 7\theta^{3} + 5\theta^{2} - 17\theta + 3
@@ -321,6 +370,7 @@ L(\theta) = \sum_{i=1}^{N}\ell(y_{i}, f(x_{i}, \theta)) = \theta^{4} + 7\theta^{
 $$
 
 이 learning rate를 최소로 만드는 parameter $\theta$ 를 찾기 위해, 다음과 같이 gradient가 0이 되는 지점을 찾을 수 있다.  
+
 $$
 \begin{align}
 \frac{d L(\theta)}{d\theta} = 0
@@ -328,6 +378,7 @@ $$
 $$
 
 하지만 이런 방법에는 문제가 있으니, 바로 closed-form expression이 존재하지 않는 경우가 많다는 것이다. 그래서 생각해낸 방법이 바로 Gradient Descent와 같은 numarical methods다. gradient의 정의를 알아볼텐데, 현재 우리는 loss function에 대해 알아보고 있으므로, $f: \mathbb{R}^{D} \rightarrow \mathbb{R}$ 인 real-value function에 대한 gradient를 알아본다.  
+
 $$
 \begin{align}
 \nabla f(x) = \left[ \frac{\partial f(x)}{\partial x_{i}} \right] = \begin{bmatrix} \frac{\partial f(x)}{\partial x_{1}} \\ \vdots \\ \frac{\partial f(x)}{\partial x_{D}} \end{bmatrix}
@@ -337,21 +388,24 @@ $$
 참고로, derivative와 gradient의 다른 점은 차원이다. gradient는 column vector, derivative는 row vector다. (서로 transpose 관계)  
 
 이 gradient를 사용하여 어떻게 solution을 찾을 수 있을까. 이미 대부분이 알듯이 gradient descent라는 방법을 사용한다. objective function $L : \mathbb{R}^{n} \rightarrow \mathbb{R}$ 이 parameter $\theta$ 에 대한 function일 때, 어떤 initial point $\theta_{0}$ 부터 시작하여, 다음과 같은 gradient path를 따라 이동하는 방법이다.  
+
 $$
 \begin{align}
 \theta_{1} = \theta_{0} - \gamma \nabla L(\theta_{0})  
 \end{align}
 $$
+
 이때, $\gamma \geq 0$ 은 step-size로, hyperparameter다.  
 
 gradient descent update rule은 위의 과정을 계속해서 반복하는 것으로, 식으로 정리하면 다음과 같다.  
+
 $$
 \begin{align}
 \theta_{t+1} = \theta_{t} - \gamma_{t} \nabla L(\theta_{t})  
 \end{align}
 $$
 
-![Fig 4. GD](pic/chap2/2-4.png)  
+![Fig 4. GD](/assets/img/CSED515/chap2/2-4.png){: width="500"} 
 
 위의 figure는 GD를 도식화한 것이다. gradient가 양수가 되는 point에서는 왼쪽으로, gradient가 음수가 되는 point에서는 오른쪽으로 이동하게 되므로, 아래로 볼록(convex)한 곡선을 따라 point가 이동하게 된다.  
 
@@ -381,11 +435,11 @@ $$
 
 다만 GD는 그 자체로 한계점이 있다. 바로 step size의 영향을 매우 크게 받는다는 점이다.  
 
-![Fig 5. GD example 1](pic/chap2/2-5.png)  
+![Fig 5. GD example 1](/assets/img/CSED515/chap2/2-5.png){: width="500"} 
 
 이 figure가 바로 이런 한계를 나타낸다. figure에 서술된 initial point와 step size를 사용하면 GD가 minimum에 수렴하지만, 처음 initial point부터 convergence point까지 가는 경로가 매우 비효율적이며, 매우 느리게 수렴하게 된다. GD를 사용하여 빠르게 converge 하게 만들기 위해서는 적절한 step size를 설정할 필요가 있다.  
 
-![Fig 6. GD stepsize](pic/chap2/2-6.png)  
+![Fig 6. GD stepsize](/assets/img/CSED515/chap2/2-6.png){: width="500"} 
 
 step size가 작은 경우, 위의 figure의 왼쪽과 같이 convergence point까지 매우 느리게 수렴하게 된다. 한편 step size를 크게 설정하게 되면, 오른쪽과 같이 convergence point에 수렴하지 못하고 발산할 수 있다.  
 
@@ -398,7 +452,7 @@ step size가 작은 경우, 위의 figure의 왼쪽과 같이 convergence point�
 
 ### Momentum  
 
-![Fig 7. Momentum](pic/chap2/2-7.jpg)  
+![Fig 7. Momentum](/assets/img/CSED515/chap2/2-7.jpg){: width="500"} 
 
 Momentum은 이전의 gradient step을 기억하여 다음 step에 일부 적용하는 방법이다. 식으로 나타내면 다음과 같다.  
 
@@ -423,9 +477,14 @@ $$
 
 만약 dataset이 너무 크다면, batch gradient를 계산하는 데 매우 많은 시간이 들 것이다. 따라서 우리는 일부의 데이터(mini-batch)만으로 gradient를 approximate하는 시도를 해볼 수 있다. 그런데, mini-batch로 구한 gradient가 실제 batch gradient와 얼마나 비슷할 줄 알고 이런 시도를 하는 것일까.  
 
-$L(\theta)$ 를 expected risk, $\hat{L}_{\mathcal{D}}(\theta)$ 를 batch에 대한 empirical risk, $\hat{L}_{\mathcal{B}}(\theta)$ 를 mini-batch에 대한 empirical risk라 하자. 이때, 임의의 데이터셋 $\mathcal{L}$ 에 대한 empirical risk를 다음과 같이 정의하자. $\hat{L}_{\mathcal{S}}(\theta) := \frac{1}{|\mathcal{S}|} \sum_{i=1}^{|\mathcal{S}|} \ell \left( y_{i}, f_{\theta}(x_{i}) \right)$  
+$L(\theta)$ 를 expected risk, 
+$\hat{L}\_{\mathcal{D}}(\theta)$ 를 batch에 대한 empirical risk, 
+$\hat{L}\_{\mathcal{B}}(\theta)$ 를 mini-batch에 대한 empirical risk라 하자. 이때, 임의의 데이터셋 
+$\mathcal{L}$ 에 대한 empirical risk를 다음과 같이 정의하자. 
+$\hat{L}\_{\mathcal{S}}(\theta) := \frac{1}{|\mathcal{S}|} \sum\_{i=1}^{|\mathcal{S}|} \ell \left( y\_{i}, f\_{\theta}(x\_{i}) \right)$  
 
 이때, $\hat{L}_{\mathcal{B}}(\theta)$ 는 $L(\theta)$ 에 대한 consistent estimator가 된다. 즉, 다음이 성립한다.  
+
 $$
 \begin{align}
 \frac{dL(\theta)}{d\theta} = \mathbb{E}\left[ \frac{d \hat{L}_{\mathcal{B}} (\theta)}{d\theta} \right]
@@ -433,10 +492,11 @@ $$
 $$
 
 이에 대한 증명은 다음과 같이 할 수 있다.  
+
 $$
 \begin{align}
 \frac{d L(\theta)}{d\theta} &= \mathbb{E} \left[ \frac{d L_{i}(\theta)}{d\theta} \right] \quad (\because \text{def of expected risk, Leibniz rule}) \\
-                            &= \mathbb{E} \left[ \frac{1}{|\mathcal{B}|} \sum_{i: x_{i} \in \mathcal{B}} \frac{d L_{i}(\theta)}{d\theta} \right] \quad (\because \text{Linearity of expectation, I.I.D assumption})
+                            &= \mathbb{E} \left[ \frac{1}{|\mathcal{B}|} \sum_{i: x_{i} \in \mathcal{B}} \frac{d L_{i}(\theta)}{d\theta} \right] \quad (\because \text{Linearity of expectation, I.I.D assumption}) \\
                             &= \mathbb{E} \left[ \frac{d \hat{L}_{\mathcal{B}} (\theta)}{d\theta} \right] \quad (\because \text{Def of mini-batch loss, derivative of sum, linearity of differentiation})  
 \end{align}
 $$
