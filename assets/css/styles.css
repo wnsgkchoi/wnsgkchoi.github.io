@@ -266,35 +266,35 @@ a:hover { text-decoration: underline; }
    Category Page Styles (VS Code Search Results Style)
    ========================================= */
 .category-container {
-    padding: 0;
+    padding: 20px 40px; /* 사이드바와의 간격 확보 */
 }
 
 .category-header {
-    padding: 10px 20px;
+    padding: 0 0 20px 0; /* 내부 패딩 제거 및 하단 여백 */
     border-bottom: 1px solid #2d2d2d;
     color: #858585;
     font-size: 0.9rem;
-    background-color: #1e1e1e;
+    background-color: transparent; /* 배경 투명하게 */
+    margin-bottom: 20px;
 }
 
 .vscode-file-list {
     display: flex;
     flex-direction: column;
-    padding-top: 5px;
-    
-    /* 리스트 전체 너비 제한 (너무 퍼지지 않게) */
-    max-width: 900px; 
+    gap: 10px; /* 아이템 간 간격 */
+    max-width: 1000px; 
 }
 
 .vscode-file-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 20px;
+    padding: 10px 15px;
     text-decoration: none;
     cursor: pointer;
-    border-left: 3px solid transparent; /* 활성 표시용 */
+    border-left: 3px solid transparent;
     transition: background-color 0.1s;
+    border-radius: 4px; /* 둥근 모서리 */
 }
 
 .vscode-file-item:hover {
@@ -310,47 +310,41 @@ a:hover { text-decoration: underline; }
 }
 
 .file-icon {
-    margin-right: 12px;
-    color: #75beff; /* Markdown Blue */
-    font-size: 0.9rem;
+    margin-right: 15px;
+    color: #75beff;
+    font-size: 1rem;
     font-family: 'Fira Code', monospace;
-    width: 20px;
-    text-align: center;
     flex-shrink: 0;
 }
 
 .file-name {
-    color: #cccccc;
-    font-size: 0.95rem;
-    white-space: nowrap;
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
-    margin-right: 15px;
+    color: #ffffff;
+    font-size: 1rem;
     font-weight: 500;
-}
-
-.file-desc {
-    color: #666666;
-    font-size: 0.85rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
-    margin-right: 20px;
+    
+    /* 제목 배경 회색 처리 */
+    background-color: #3c3c3c;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
 }
 
 .vscode-file-item:hover .file-name {
-    color: #ffffff;
+    background-color: #4d4d4d; /* 호버 시 조금 더 밝게 */
 }
+
+/* 설명(Excerpt) 제거로 인한 스타일 삭제 */
+/* .file-desc { ... } */
 
 .file-right {
     flex-shrink: 0;
+    margin-left: 20px;
 }
 
 .file-meta {
     color: #6a9955; /* Comment Green */
     font-family: 'Fira Code', monospace;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
 }
 
 /* 제목 영역 여백 확보 */
