@@ -1,0 +1,222 @@
+---
+permalink: /all-posts/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <style>
+        .all-posts-container {
+            padding: 20px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .post-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #3c3c3c;
+            padding-bottom: 10px;
+        }
+        .post-list-header h1 {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin: 0;
+        }
+        .post-count {
+            color: #858585;
+            font-size: 0.9rem;
+        }
+        
+        /* Post Item Style */
+        .post-item {
+            display: flex; /* JS로 제어됨 */
+            padding: 15px 0;
+            border-bottom: 1px solid #2d2d2d;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        .post-item:hover {
+            background-color: #252526;
+        }
+        .post-item a {
+            text-decoration: none;
+            display: flex;
+            width: 100%;
+            align-items: center;
+        }
+        .post-date {
+            font-family: 'Fira Code', monospace;
+            color: #858585;
+            font-size: 0.85rem;
+            width: 120px;
+            flex-shrink: 0;
+        }
+        .post-title {
+            color: #3794ff;
+            font-size: 1.1rem;
+            font-weight: 500;
+            flex: 1;
+            margin: 0 20px;
+        }
+        .post-category {
+            background-color: #3c3c3c;
+            color: #cccccc;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        /* Pagination Controls */
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            gap: 5px;
+        }
+        .page-btn {
+            background-color: #252526;
+            color: #cccccc;
+            border: 1px solid #3c3c3c;
+            padding: 5px 12px;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            border-radius: 3px;
+        }
+        .page-btn:hover {
+            background-color: #37373d;
+            color: white;
+        }
+        .page-btn.active {
+            background-color: #007acc;
+            color: white;
+            border-color: #007acc;
+        }
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    {% include header.html %}
+
+    <div class="container">
+        {% include sidebar.html %}
+
+        <main class="content">
+            <div class="editor-tabs">
+                <div class="tab active">
+                    <span class="tab-icon">📝</span>
+                    <span class="tab-name">All Posts</span>
+                    <span class="tab-close">&times;</span>
+                </div>
+            </div>
+
+            <div class="all-posts-container">
+                <div class="post-list-header">
+                    <h1>All Posts</h1>
+                    <span class="post-count">{{ site.posts.size }} posts found</span>
+                </div>
+
+                <div id="post-list">
+                    {% for post in site.posts %}
+                    <div class="post-item">
+                        <a href="{{ post.url }}">
+                            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+                            <span class="post-title">{{ post.title }}</span>
+                            {% if post.categories.size > 0 %}
+                            <span class="post-category">{{ post.categories | first }}</span>
+                            {% endif %}
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="pagination-controls" id="pagination-controls">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    {% include footer.html %}
+    <script src="/assets/js/main.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const itemsPerPage = 10;
+            const postList = document.getElementById('post-list');
+            const posts = postList.getElementsByClassName('post-item');
+            const paginationContainer = document.getElementById('pagination-controls');
+            const totalPages = Math.ceil(posts.length / itemsPerPage);
+            let currentPage = 1;
+
+            function showPage(page) {
+                if (page < 1) page = 1;
+                if (page > totalPages) page = totalPages;
+                currentPage = page;
+
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+
+                for (let i = 0; i < posts.length; i++) {
+                    if (i >= start && i < end) {
+                        posts[i].style.display = 'flex';
+                    } else {
+                        posts[i].style.display = 'none';
+                    }
+                }
+                
+                renderPagination();
+                window.scrollTo(0, 0);
+            }
+
+            function renderPagination() {
+                paginationContainer.innerHTML = '';
+
+                // Prev Button
+                const prevBtn = document.createElement('button');
+                prevBtn.innerText = '<';
+                prevBtn.className = 'page-btn';
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.onclick = () => showPage(currentPage - 1);
+                paginationContainer.appendChild(prevBtn);
+
+                // Page Numbers
+                // Simple logic: show all pages if total <= 7, else show range
+                // For simplicity, let's show all for now or a simple range
+                
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.innerText = i;
+                    btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                    btn.onclick = () => showPage(i);
+                    paginationContainer.appendChild(btn);
+                }
+
+                // Next Button
+                const nextBtn = document.createElement('button');
+                nextBtn.innerText = '>';
+                nextBtn.className = 'page-btn';
+                nextBtn.disabled = currentPage === totalPages;
+                nextBtn.onclick = () => showPage(currentPage + 1);
+                paginationContainer.appendChild(nextBtn);
+            }
+
+            // Initialize
+            if (posts.length > 0) {
+                showPage(1);
+            } else {
+                paginationContainer.innerHTML = '<span style="color:#888">No posts found.</span>';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -3,8 +3,7 @@ layout: post
 title:  "[CSED515] 2. Linear Regression"
 
 categories:
-  - Lecture
-  - CSED515
+  - Machine_Learning
 tags:
   - [CSED515, ML, Lecture]
 
@@ -53,7 +52,9 @@ $$
 \end{align}
 $$
 
-이때, $p(x) \geq 0 \forall x \in \mathbb{R}$ 이므로, 이 적분 식이 0이 되기 위해서는 $\mathbb{E}\left[ y | x \right] = f(x)$ 이 성립해야 한다.  
+이때, $p(x) \geq 0 \forall x \in \mathbb{R}$ 이므로, 이 적분 식이 0이 되기 위해서는 
+$\mathbb{E}\left[ y | x \right] = f(x)$
+이 성립해야 한다.  
 
 참고로, 이 풀이에 오류가 있다고 생각하는데, (마지막 근거가 부족하다. 꼭 저 두 term이 같지 않더라도 적분값을 0으로 만들 여지는 충분하기 때문). 다만 이 식이 모든 데이터 분포 $p(x)$ 에 대해 성립해야 하고, 
 $ f(x) = \mathbb{E}\left[ y|x \right] $
@@ -73,7 +74,9 @@ $$
 \end{align}
 $$
 
-이 식을 위와 비슷한 방식으로 편미분한 뒤 정리하면 $f(x) = \mathbb{E}\left[ y|x \right]$ 가 된다.  
+이 식을 위와 비슷한 방식으로 편미분한 뒤 정리하면 
+$f(x) = \mathbb{E}\left[ y|x \right]$
+가 된다.  
 
 이제부터 간단한 모델의 regression에 대해 상세히 알아보도록 하자.  
 
@@ -145,9 +148,13 @@ $$
 $\ell$ 로 polymonial의 차수를 조절한다. 이때, 차수가 큰 것이 표현력이 좋아서 항상 좋다고 생각할 수 있는데, 위의 figure에서 볼 수 있듯이, 실제 data의 분포보다 더 복잡한 함수로 over-fitting되는 문제가 발생할 수 있다.  
 
 한편, basis function을 사용하는 Linear Regression 모델도 learning objective로 MSE를 사용할 수 있다. Training data 
-$\left\{ x_{n} \in \mathbb{R}^{D}, y_{n} \in \mathbb{R} \right\}_{n \in [N]}$
+$$
+\left\{ x_{n} \in \mathbb{R}^{D}, y_{n} \in \mathbb{R} \right\}_{n \in [N]}
+$$
 에 대해, 아래의 식을 최소로 만드는 weight vector 
-$ w = \left[ w_{1}, \ldots, w_{L} \right]^{T}$
+$$
+w = \left[ w_{1}, \ldots, w_{L} \right]^{T}
+$$
 를 찾는 것이 목표가 된다.  
 
 $$
@@ -245,7 +252,8 @@ p(w) = \mathcal{N} \left( w | 0, \Sigma \right)
 \end{align}
 $$
 
-이때, $y = \Phi w + \epsilon$, $\epsilon \sim \mathcal{N} \left( y | \Phi w, \sigma^{2} I \right)$ 이므로,  
+이때, $y = \Phi w + \epsilon$, 
+$\epsilon \sim \mathcal{N} \left( y | \Phi w, \sigma^{2} I \right)$ 이므로,  
 
 $$
 \begin{align}

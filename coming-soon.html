@@ -1,0 +1,52 @@
+---
+permalink: /coming-soon/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+    {% include header.html %}
+
+    <div class="container">
+        {% include sidebar.html %}
+
+        <main class="content">
+            <div class="editor-tabs">
+                <div class="tab active">
+                    <span class="tab-icon">🚧</span>
+                    <span class="tab-name">Coming Soon</span>
+                    <span class="tab-close">&times;</span>
+                </div>
+            </div>
+
+            <div class="post-content-wrapper" style="text-align: center; padding-top: 100px; display: flex; flex-direction: column; align-items: center;">
+                <div style="font-size: 6rem; margin-bottom: 20px;">🚧</div>
+                <h1 style="font-family: 'Fira Code', monospace; color: #ffffff; margin-bottom: 10px;">Under Construction</h1>
+                <p style="color: #858585; font-size: 1.2rem; margin-bottom: 40px; line-height: 1.6;">
+                    This page is currently being developed.<br>
+                    Please check back later!
+                </p>
+                <a href="/" style="
+                    display: inline-block;
+                    padding: 10px 25px;
+                    background-color: #007acc;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 2px;
+                    font-family: 'Fira Code', monospace;
+                    font-size: 0.9rem;
+                    transition: background-color 0.2s;
+                " onmouseover="this.style.backgroundColor='#0062a3'" onmouseout="this.style.backgroundColor='#007acc'">Go Back Home</a>
+            </div>
+        </main>
+    </div>
+
+    {% include footer.html %}
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
